@@ -8,7 +8,7 @@ const alerts = new Alert();
 
 alerts.init();
 
-const element = document.querySelector(".product-list");
+const element = document.querySelector(".cart-list");
 
 const cart = new ShoppingCart("so-cart", element);
 
