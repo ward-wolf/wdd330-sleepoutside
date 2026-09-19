@@ -9,8 +9,8 @@ export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 // retrieve the cart as an array (empty if nothing has been added yet)
-export function getCartItems() {
-  const cart = getLocalStorage("so-cart");
+export function getCartItems(key = "so-cart") {
+  const cart = getLocalStorage(key);
   if (!cart) return [];
   // older versions saved a single product object instead of an array
   return Array.isArray(cart) ? cart : [cart];
@@ -53,6 +53,34 @@ export function renderListWithTemplate(template, parentElement, list, position =
     parentElement.innerHTML = "";
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  // root-relative paths so this works from any page, even in subfolders
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+
+  // the cart icon only exists once the header is loaded
+  updateCartCount();
 }
 
 // works for any product with FinalPrice and SuggestedRetailPrice;
