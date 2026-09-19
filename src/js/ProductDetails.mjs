@@ -1,4 +1,9 @@
-import { getCartItems, setLocalStorage, updateCartCount } from "./utils.mjs";
+import {
+  getCartItems,
+  getDiscount,
+  setLocalStorage,
+  updateCartCount,
+} from "./utils.mjs";
 
 export default class ProductDetails {
 
@@ -41,6 +46,15 @@ function productDetailsTemplate(product) {
   productImage.alt = product.NameWithoutBrand;
 
   document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
+
+  const discount = getDiscount(product);
+  if (discount) {
+    const productDiscount = document.getElementById("productDiscount");
+    productDiscount.innerHTML = `
+      <span class="product__discount-badge">${discount.percent}% OFF</span>
+      Was <s>$${discount.retail}</s> &middot; You save $${discount.amount}`;
+    productDiscount.classList.remove("hide");
+  }
 
   document.getElementById("productColor").textContent = product.Colors[0].ColorName;
   document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
