@@ -1,4 +1,5 @@
 import {
+  animateCartIcon,
   getCartItems,
   getDiscount,
   setLocalStorage,
@@ -27,9 +28,16 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getCartItems();
-    cartItems.push(this.product);
+    // adding the same product again just raises its quantity
+    const existing = cartItems.find((item) => item.Id === this.product.Id);
+    if (existing) {
+      existing.Quantity += 1;
+    } else {
+      cartItems.push({ ...this.product, Quantity: 1 });
+    }
     setLocalStorage("so-cart", cartItems);
     updateCartCount();
+    animateCartIcon();
   }
 
   renderProductDetails() {
@@ -38,11 +46,13 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
+  document.title = `Sleep Outside | ${product.Name}`;
+
   document.querySelector("h2").textContent = product.Brand.Name;
   document.querySelector("h3").textContent = product.NameWithoutBrand;
 
   const productImage = document.getElementById("productImage");
-  productImage.src = product.Image;
+  productImage.src = product.Images.PrimaryLarge;
   productImage.alt = product.NameWithoutBrand;
 
   document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
