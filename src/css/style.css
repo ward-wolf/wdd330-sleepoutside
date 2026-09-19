@@ -114,6 +114,10 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
+.hide {
+  display: none;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */
@@ -241,6 +245,31 @@ button {
 
 .product-detail img {
   width: 100%;
+}
+
+.product__discount {
+  font-size: var(--small-font);
+}
+
+.product__discount-badge {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.25em;
+  background-color: var(--tertiary-color);
+  color: white;
+  font-weight: bold;
+}
+
+/* Cart footer (total, and later the Checkout button) */
+.cart-footer {
+  padding: 1em 0;
+  text-align: right;
+}
+
+.cart-total {
+  font-size: var(--large-font);
+  font-weight: bold;
 }
 
 /* Start cart list card styles */
