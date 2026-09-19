@@ -13,7 +13,24 @@ export function getCartItems(key = "so-cart") {
   const cart = getLocalStorage(key);
   if (!cart) return [];
   // older versions saved a single product object instead of an array
-  return Array.isArray(cart) ? cart : [cart];
+  const list = Array.isArray(cart) ? cart : [cart];
+
+  // older versions also repeated an item instead of counting it, so merge
+  // any repeats and make sure every item has a Quantity
+  const merged = [];
+  list.forEach((item) => {
+    const existing = merged.find((other) => other.Id === item.Id);
+    if (existing) {
+      existing.Quantity += Number(item.Quantity) || 1;
+    } else {
+      merged.push({ ...item, Quantity: Number(item.Quantity) || 1 });
+    }
+  });
+  return merged;
+}
+// total number of items in the cart, counting quantities
+export function getCartCount(key = "so-cart") {
+  return getCartItems(key).reduce((count, item) => count + item.Quantity, 0);
 }
 // show the number of items in the cart as a superscript on the backpack icon
 export function updateCartCount() {
@@ -25,7 +42,7 @@ export function updateCartCount() {
     badge.classList.add("cart-count");
     cartLink.appendChild(badge);
   }
-  const count = getCartItems().length;
+  const count = getCartCount();
   badge.textContent = count;
   badge.hidden = count === 0;
 }
@@ -94,4 +111,29 @@ export function getDiscount(product) {
     amount: (retail - final).toFixed(2),
     percent: Math.round(((retail - final) / retail) * 100),
   };
+}
+
+// turn a url category like "sleeping-bags" into a label like "Sleeping Bags"
+export function categoryLabel(category) {
+  if (!category) return "";
+  return category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+// briefly animate the backpack icon so an add to the cart is noticeable
+export function animateCartIcon() {
+  const cart = qs(".cart");
+  if (!cart) return;
+
+  cart.classList.remove("cart--added");
+  // reading offsetWidth restarts the animation on a quick second click
+  void cart.offsetWidth;
+  cart.classList.add("cart--added");
+  cart.addEventListener(
+    "animationend",
+    () => cart.classList.remove("cart--added"),
+    { once: true },
+  );
 }
