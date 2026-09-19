@@ -209,6 +209,28 @@ button {
   font-size: 1em;
 }
 
+.product-card a {
+  display: block;
+  position: relative;
+}
+
+.product-card__discount {
+  position: absolute;
+  top: 0.25em;
+  left: 0.25em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.25em;
+  background-color: var(--tertiary-color);
+  color: white;
+  font-size: var(--small-font);
+  font-weight: bold;
+}
+
+.product-card__retail {
+  color: var(--dark-grey);
+  font-size: var(--small-font);
+}
+
 /* End product list card */
 
 .product-detail {

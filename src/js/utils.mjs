@@ -45,3 +45,25 @@ export function getParam(param) {
   const product = urlParams.get(param);
   return product;
 }
+
+export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+  const htmlStrings = list.map(template);
+  // if clear is true we need to clear out the contents of the parent.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+// works for any product with FinalPrice and SuggestedRetailPrice;
+// returns null when the product is not discounted
+export function getDiscount(product) {
+  const retail = Number(product.SuggestedRetailPrice);
+  const final = Number(product.FinalPrice);
+  if (!retail || !final || final >= retail) return null;
+  return {
+    retail: retail.toFixed(2),
+    amount: (retail - final).toFixed(2),
+    percent: Math.round(((retail - final) / retail) * 100),
+  };
+}
