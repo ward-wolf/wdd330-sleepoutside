@@ -16,3 +16,16 @@ order.init();
 document
   .querySelector("#zip")
   .addEventListener("blur", () => order.calculateOrderTotal());
+
+document.querySelector("#checkoutForm").addEventListener("submit", (event) => {
+  // stop the browser from reloading the page with the form values in the url
+  event.preventDefault();
+
+  // let the browser show its own messages for empty or badly formatted fields
+  if (!event.target.checkValidity()) {
+    event.target.reportValidity();
+    return;
+  }
+
+  order.checkout();
+});

@@ -1,5 +1,29 @@
 import { getCartItems } from "./utils.mjs";
 
+import ExternalServices from "./ExternalServices.mjs";
+
+const services = new ExternalServices();
+
+function formDataToJSON(formElement) {
+  // convert the form data to a JSON object
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+  formData.forEach((value, key) => {
+    convertedJSON[key] = value;
+  });
+  return convertedJSON;
+}
+
+function packageItems(items) {
+  const simplifiedItems = items.map((item) => ({
+    id: item.Id,
+    price: item.FinalPrice,
+    name: item.Name,
+    quantity: item.Quantity,
+  }));
+  return simplifiedItems;
+}
+
 const TAX_RATE = 0.06;
 // $10 for the first item, $2 for each additional item
 const FIRST_ITEM_SHIPPING = 10;
@@ -24,7 +48,10 @@ export default class CheckoutProcess {
 
   calculateItemSummary() {
     // calculate and display the total dollar amount of the items in the cart, and the number of items.
-    this.itemCount = this.list.reduce((count, item) => count + item.Quantity, 0);
+    this.itemCount = this.list.reduce(
+      (count, item) => count + item.Quantity,
+      0,
+    );
     this.itemTotal = this.list.reduce(
       (total, item) => total + Number(item.FinalPrice) * item.Quantity,
       0,
@@ -55,9 +82,30 @@ export default class CheckoutProcess {
   }
 
   displayText(selector, value) {
-    const element = document.querySelector(`${this.outputSelector} ${selector}`);
+    const element = document.querySelector(
+      `${this.outputSelector} ${selector}`,
+    );
     if (element) {
       element.innerText = value;
+    }
+  }
+
+  async checkout() {
+    const formElement = document.forms["checkout"];
+    const order = formDataToJSON(formElement);
+
+    order.orderDate = new Date().toISOString();
+    // send money amounts rounded to cents, not raw floating point results
+    order.orderTotal = this.orderTotal.toFixed(2);
+    order.tax = this.tax.toFixed(2);
+    order.shipping = this.shipping;
+    order.items = packageItems(this.list);
+
+    try {
+      const response = await services.checkout(order);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
     }
   }
 }

@@ -25,20 +25,20 @@
             <fieldset>
               <legend>Customer</legend>
 
-              <label for="firstName">First Name</label>
+              <label for="fname">First Name</label>
               <input
                 type="text"
-                id="firstName"
-                name="firstName"
+                id="fname"
+                name="fname"
                 autocomplete="given-name"
                 required
               />
 
-              <label for="lastName">Last Name</label>
+              <label for="lname">Last Name</label>
               <input
                 type="text"
-                id="lastName"
-                name="lastName"
+                id="lname"
+                name="lname"
                 autocomplete="family-name"
                 required
               />
@@ -97,6 +97,7 @@
                 type="text"
                 id="cardNumber"
                 name="cardNumber"
+                value="1234123412341234"
                 autocomplete="cc-number"
                 inputmode="numeric"
                 pattern="[\d ]{13,19}"
@@ -109,8 +110,9 @@
                 type="text"
                 id="expiration"
                 name="expiration"
+                value="8/28"
                 autocomplete="cc-exp"
-                pattern="(0[1-9]|1[0-2])/\d{2}"
+                pattern="(0?[1-9]|1[0-2])/\d{2}"
                 placeholder="MM/YY"
                 required
               />
@@ -120,6 +122,7 @@
                 type="text"
                 id="code"
                 name="code"
+                value="123"
                 autocomplete="cc-csc"
                 inputmode="numeric"
                 pattern="\d{3,4}"
@@ -127,6 +130,8 @@
                 required
               />
             </fieldset>
+
+            <button type="submit" id="checkoutSubmit">Place Order</button>
           </form>
 
           <aside class="order-summary">
