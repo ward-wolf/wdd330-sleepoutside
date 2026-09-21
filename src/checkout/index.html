@@ -19,6 +19,150 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+
+        <div class="checkout">
+          <form id="checkoutForm" class="checkout-form" name="checkout">
+            <fieldset>
+              <legend>Customer</legend>
+
+              <label for="fname">First Name</label>
+              <input
+                type="text"
+                id="fname"
+                name="fname"
+                autocomplete="given-name"
+                required
+              />
+
+              <label for="lname">Last Name</label>
+              <input
+                type="text"
+                id="lname"
+                name="lname"
+                autocomplete="family-name"
+                required
+              />
+            </fieldset>
+
+            <fieldset>
+              <legend>Shipping &amp; Billing Address</legend>
+
+              <label for="street">Street Address</label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                autocomplete="street-address"
+                required
+              />
+
+              <label for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                autocomplete="address-level2"
+                required
+              />
+
+              <label for="state">State</label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                autocomplete="address-level1"
+                maxlength="2"
+                placeholder="UT"
+                required
+              />
+
+              <label for="zip">Zip Code</label>
+              <input
+                type="text"
+                id="zip"
+                name="zip"
+                autocomplete="postal-code"
+                inputmode="numeric"
+                pattern="\d{5}(-\d{4})?"
+                placeholder="84604"
+                required
+              />
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment</legend>
+
+              <label for="cardNumber">Credit Card Number</label>
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                value="1234123412341234"
+                autocomplete="cc-number"
+                inputmode="numeric"
+                pattern="[\d ]{13,19}"
+                placeholder="1234 5678 9012 3456"
+                required
+              />
+
+              <label for="expiration">Expiration Date</label>
+              <input
+                type="text"
+                id="expiration"
+                name="expiration"
+                value="8/28"
+                autocomplete="cc-exp"
+                pattern="(0?[1-9]|1[0-2])/\d{2}"
+                placeholder="MM/YY"
+                required
+              />
+
+              <label for="code">Security Code</label>
+              <input
+                type="text"
+                id="code"
+                name="code"
+                value="123"
+                autocomplete="cc-csc"
+                inputmode="numeric"
+                pattern="\d{3,4}"
+                placeholder="123"
+                required
+              />
+            </fieldset>
+
+            <button type="submit" id="checkoutSubmit">Place Order</button>
+          </form>
+
+          <aside class="order-summary">
+            <h3>Order Summary</h3>
+            <ul class="order-summary__list">
+              <li>
+                <span>Items</span>
+                <span id="num-items">0</span>
+              </li>
+              <li>
+                <span>Subtotal</span>
+                <span id="cartTotal">$0.00</span>
+              </li>
+              <li>
+                <span>Shipping</span>
+                <span id="shipping">$0.00</span>
+              </li>
+              <li>
+                <span>Tax</span>
+                <span id="tax">$0.00</span>
+              </li>
+              <li class="order-summary__total">
+                <span>Order Total</span>
+                <span id="orderTotal">$0.00</span>
+              </li>
+            </ul>
+            <p class="order-summary__note">
+              Shipping and tax are calculated once you enter your zip code.
+            </p>
+          </aside>
+        </div>
       </section>
     </main>
 

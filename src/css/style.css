@@ -385,6 +385,97 @@ button {
   font-weight: bold;
 }
 
+/* a link styled to match the site's buttons */
+.button {
+  display: inline-block;
+  padding: 0.5em 2em;
+  background-color: var(--secondary-color);
+  color: white;
+  border: 0;
+  font-size: var(--large-font);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--tertiary-color);
+}
+
+/* Checkout form */
+.checkout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.checkout-form fieldset {
+  margin-bottom: 1.5em;
+  padding: 1em;
+  border: 1px solid var(--light-grey);
+}
+
+.checkout-form legend {
+  padding: 0 0.5em;
+  font-weight: bold;
+}
+
+.checkout-form label {
+  display: block;
+  margin-top: 0.75em;
+  font-size: var(--small-font);
+}
+
+.checkout-form input {
+  display: block;
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid var(--light-grey);
+  font-size: inherit;
+}
+
+.order-summary {
+  padding: 1em;
+  border: 1px solid var(--light-grey);
+}
+
+.order-summary__list {
+  list-style-type: none;
+  margin-top: 0.5em;
+}
+
+.order-summary__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.4em 0;
+}
+
+.order-summary__total {
+  margin-top: 0.4em;
+  border-top: 2px solid var(--primary-color);
+  font-size: var(--large-font);
+  font-weight: bold;
+}
+
+.order-summary__note {
+  padding: 0.75em 0 0;
+  font-size: var(--small-font);
+}
+
+/* highlight a filled-in field the browser considers invalid */
+.checkout-form input:not(:placeholder-shown):invalid {
+  border-color: var(--tertiary-color);
+}
+
+@media screen and (min-width: 700px) {
+  /* form on the left, room for the order summary on the right */
+  .checkout {
+    grid-template-columns: minmax(0, 28rem) 1fr;
+  }
+}
+
 /* Start cart list card styles */
 /* a plain stacked list, unlike .product-list which is a flex grid of cards */
 .cart-list {

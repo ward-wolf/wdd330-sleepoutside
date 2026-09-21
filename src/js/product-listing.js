@@ -1,5 +1,5 @@
 import { categoryLabel, getParam, loadHeaderFooter } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import Alert from "./Alert.mjs";
 
@@ -12,7 +12,7 @@ alerts.init();
 const category = getParam("category");
 const search = getParam("search");
 
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 
 const element = document.querySelector(".product-list");
 
