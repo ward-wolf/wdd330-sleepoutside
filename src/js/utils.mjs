@@ -137,3 +137,29 @@ export function animateCartIcon() {
     { once: true },
   );
 }
+
+// show a message at the top of the page, with an X to dismiss it
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.innerHTML = `<p></p><span class="alert__close">X</span>`;
+  // textContent keeps any server message from injecting html
+  alert.querySelector("p").textContent = message;
+
+  alert.addEventListener("click", (event) => {
+    if (event.target.classList.contains("alert__close")) {
+      alert.remove();
+    }
+  });
+
+  const main = document.querySelector("main");
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
+// clear any messages already on the page
+export function removeAllAlerts() {
+  document.querySelectorAll(".alert").forEach((alert) => alert.remove());
+}

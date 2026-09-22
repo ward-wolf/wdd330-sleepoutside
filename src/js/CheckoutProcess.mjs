@@ -1,4 +1,9 @@
-import { getCartItems } from "./utils.mjs";
+import {
+  alertMessage,
+  getCartItems,
+  removeAllAlerts,
+  setLocalStorage,
+} from "./utils.mjs";
 
 import ExternalServices from "./ExternalServices.mjs";
 
@@ -91,21 +96,25 @@ export default class CheckoutProcess {
   }
 
   async checkout() {
-    const formElement = document.forms["checkout"];
-    const order = formDataToJSON(formElement);
-
-    order.orderDate = new Date().toISOString();
+    const form = document.forms.checkout;
+    const payload = formDataToJSON(form);
+    payload.orderDate = new Date().toISOString();
     // send money amounts rounded to cents, not raw floating point results
-    order.orderTotal = this.orderTotal.toFixed(2);
-    order.tax = this.tax.toFixed(2);
-    order.shipping = this.shipping;
-    order.items = packageItems(this.list);
+    payload.orderTotal = this.orderTotal.toFixed(2);
+    payload.tax = this.tax.toFixed(2);
+    payload.shipping = this.shipping;
+    payload.items = packageItems(this.list);
 
     try {
-      const response = await services.checkout(order);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
+      await services.checkout(payload);
+      setLocalStorage(this.key, []);
+      window.location.assign("/checkout/success.html");
+    } catch (error) {
+      removeAllAlerts();
+      const messages = error.message && typeof error.message === "object"
+        ? Object.values(error.message)
+        : [error.message || "Unable to place your order."];
+      messages.forEach((message) => alertMessage(message));
     }
   }
 }

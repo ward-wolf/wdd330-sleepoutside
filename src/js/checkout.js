@@ -17,15 +17,16 @@ document
   .querySelector("#zip")
   .addEventListener("blur", () => order.calculateOrderTotal());
 
-document.querySelector("#checkoutForm").addEventListener("submit", (event) => {
+document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
   // stop the browser from reloading the page with the form values in the url
-  event.preventDefault();
+  e.preventDefault();
 
-  // let the browser show its own messages for empty or badly formatted fields
-  if (!event.target.checkValidity()) {
-    event.target.reportValidity();
-    return;
+  const myForm = document.forms.checkout;
+  const chk_status = myForm.checkValidity();
+  // show the browser's own messages for empty or badly formatted fields
+  myForm.reportValidity();
+
+  if (chk_status) {
+    order.checkout();
   }
-
-  order.checkout();
 });
