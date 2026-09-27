@@ -312,6 +312,14 @@ button {
   max-width: 250px;
 }
 
+/* smaller thumbnails on phones, and a consistent box so cards line up */
+.product-card img {
+  display: block;
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+}
+
 .product-card h2,
 .product-card h3,
 .product-card p {
@@ -357,7 +365,11 @@ button {
 }
 
 .product-detail img {
+  display: block;
   width: 100%;
+  max-height: 240px;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
 .product__discount {
@@ -400,6 +412,43 @@ button {
 
 .button:hover {
   background-color: var(--tertiary-color);
+}
+
+/* Error and status messages */
+.alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  margin: 0 auto 0.5em;
+  padding: 0.75em 1em;
+  max-width: 800px;
+  background-color: var(--tertiary-color);
+  color: white;
+}
+
+.alert p {
+  padding: 0;
+}
+
+.alert__close {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.order-success {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  max-width: 600px;
+  text-align: center;
+}
+
+.order-success p {
+  padding: 0.75em 0;
+}
+
+.order-success .button {
+  margin-top: 1rem;
 }
 
 /* Checkout form */
@@ -584,6 +633,15 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px 1fr 7rem 2.5rem;
+  }
+
+  /* tablet and up: back to the roomier image sizes */
+  .product-card img {
+    height: 160px;
+  }
+
+  .product-detail img {
+    max-height: 420px;
   }
 
   .cart-card__image img {

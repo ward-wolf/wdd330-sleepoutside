@@ -53,6 +53,11 @@ function productDetailsTemplate(product) {
 
   const productImage = document.getElementById("productImage");
   productImage.src = product.Images.PrimaryLarge;
+  // let the browser pick a file size that suits the screen
+  productImage.srcset = `${product.Images.PrimaryMedium} 160w,
+    ${product.Images.PrimaryLarge} 320w,
+    ${product.Images.PrimaryExtraLarge} 600w`;
+  productImage.sizes = "(min-width: 500px) 500px, 70vw";
   productImage.alt = product.NameWithoutBrand;
 
   document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
